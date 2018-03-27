@@ -4,5 +4,8 @@
 
 {% block body %}
     {{ mainContent|raw }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 
 {% endblock %}
