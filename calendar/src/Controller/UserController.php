@@ -17,7 +17,6 @@ class UserController extends Controller
      */
     public function login(Request $request, LoggerInterface $logger){
         $logger->info("We are loading the login page");
-        $content = "Login Form";
 
         $user = new User();
 
@@ -27,10 +26,24 @@ class UserController extends Controller
             ->add('save', SubmitType::class, array('label' => 'Login'))
             ->getForm();
 
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+
+            /*
+             * Check if user's exists if yes grant login otherwise return the login page with an error message
+             * displayed
+            */
+
+            return $this->redirectToRoute('task_success');
+        }
+
+
         return $this->render('login.html.twig',
             array(
-                'title' => 'Login',
-                'mainContent' => $content,
+                'title' => 'Company Calendar',
                 'form' => $form->createView()
             )
         );

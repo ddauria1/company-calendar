@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ title }}{% endblock %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/assets/css/login.css" media="screen">
+{% endblock %}
 {% block body %}
-    {{ mainContent|raw }}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-
+    <div id="login-page-container">
+        <h1>{{ title|raw }}</h1>
+        <div class="login-page">
+            <div class="form">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
