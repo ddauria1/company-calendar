@@ -2,12 +2,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\LoginForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserController extends Controller
 {
@@ -20,17 +19,15 @@ class UserController extends Controller
 
         $user = new User();
 
-        $form = $this->createFormBuilder($user)
-            ->add('email', TextType::class)
-            ->add('password', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Login'))
-            ->getForm();
+        $form = $this->createForm(LoginForm::class,$user);
 
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+
+            var_dump($user);exit;
 
             /*
              * Check if user's exists if yes grant login otherwise return the login page with an error message

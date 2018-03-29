@@ -2,13 +2,21 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class User
 {
     protected $id;
     protected $type;
     protected $firstname;
     protected $surname;
+    /**
+     * @Assert\NotBlank()
+     */
     protected $email;
+    /**
+     * @Assert\NotBlank()
+     */
     protected $password;
     protected $createdBy;
     protected $createdDate;
