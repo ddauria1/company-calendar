@@ -4,24 +4,50 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ */
 class User
 {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     protected $id;
+
+    /** @ORM\Column(type="integer") */
     protected $type;
+
+    /** @ORM\Column(type="string", length=100) */
     protected $firstname;
+
+    /** @ORM\Column(type="string", length=100) */
     protected $surname;
+
     /**
      * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=100)
      */
     protected $email;
     /**
      * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=100)
      */
     protected $password;
+
+    /** @ORM\Column(type="integer") */
     protected $createdBy;
+
+    /** @ORM\Column(type="datetime") */
     protected $createdDate;
+
+    /** @ORM\Column(type="integer") */
     protected $updatedBy;
+
+    /** @ORM\Column(type="datetime") */
     protected $updatedDate;
 
     /**
