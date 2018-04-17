@@ -7,6 +7,9 @@
 {% block body %}
     <div id="login-page-container">
         <h1>{{ title|raw }}</h1>
+        {% if error is not empty %}
+            <div id="error-message">{{ error }}</div>
+        {% endif %}
         <div class="login-page">
             <div class="form">
                 {{ form_start(form) }}

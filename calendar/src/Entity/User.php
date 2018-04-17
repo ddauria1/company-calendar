@@ -2,187 +2,175 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    protected $id;
-
-    /** @ORM\Column(type="integer") */
-    protected $type;
-
-    /** @ORM\Column(type="string", length=100) */
-    protected $firstname;
-
-    /** @ORM\Column(type="string", length=100) */
-    protected $surname;
+    private $id;
 
     /**
-     * @Assert\NotBlank()
+     * @ORM\Column(type="integer")
+     */
+    private $type;
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
-    protected $email;
+    private $firstname;
+
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=100)
      */
-    protected $password;
-
-    /** @ORM\Column(type="integer") */
-    protected $createdBy;
-
-    /** @ORM\Column(type="datetime") */
-    protected $createdDate;
-
-    /** @ORM\Column(type="integer") */
-    protected $updatedBy;
-
-    /** @ORM\Column(type="datetime") */
-    protected $updatedDate;
+    private $surname;
 
     /**
-     * User constructor.
-     * @param $id
-     * @param $type
-     * @param $firstname
-     * @param $surname
-     * @param $email
-     * @param $password
-     * @param $createdBy
-     * @param $createdDate
-     * @param $updatedBy
-     * @param $updatedDate
+     * @ORM\Column(type="string", length=100)
      */
-    public function __construct()
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $created_by;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_date;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $updated_by;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_date;
+
+    public function getId()
     {
-        $this->email = "";
-        $this->password = "";
-    }
-
-
-    public function getId() :int {
         return $this->id;
     }
 
-    public function setId(int $id)
-    {
-        $this->id = $id;
-    }
-
-    public function getType() :int
+    public function getType(): ?int
     {
         return $this->type;
     }
 
-
-    public function setType(int $type)
+    public function setType(int $type): self
     {
         $this->type = $type;
+
+        return $this;
     }
 
-
-    public function getFirstname() :string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-
-    public function setFirstname(string $firstname)
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
     }
 
-
-    public function getSurname() :string
+    public function getSurname(): ?string
     {
         return $this->surname;
     }
 
-
-    public function setSurname(string $surname)
+    public function setSurname(string $surname): self
     {
         $this->surname = $surname;
+
+        return $this;
     }
 
-
-    public function getEmail() :string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-
-    public function setEmail(string $email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
-
-    public function getPassword() :string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-
-    public function setPassword(string $password)
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
-
-    public function getCreatedBy() :int
+    public function getCreatedBy(): ?int
     {
-        return $this->createdBy;
+        return $this->created_by;
     }
 
-
-    public function setCreatedBy(int $createdBy)
+    public function setCreatedBy(int $created_by): self
     {
-        $this->createdBy = $createdBy;
+        $this->created_by = $created_by;
+
+        return $this;
     }
 
-
-    public function getCreatedDate() :\DateTime
+    public function getCreatedDate(): ?\DateTimeInterface
     {
-        return $this->createdDate;
+        return $this->created_date;
     }
 
-    public function setCreatedDate(\DateTime $createdDate)
+    public function setCreatedDate(\DateTimeInterface $created_date): self
     {
-        $this->createdDate = $createdDate;
+        $this->created_date = $created_date;
+
+        return $this;
     }
 
-
-    public function getUpdatedBy()  :int
+    public function getUpdatedBy(): ?int
     {
-        return $this->updatedBy;
+        return $this->updated_by;
     }
 
-
-    public function setUpdatedBy(int $updatedBy)
+    public function setUpdatedBy(int $updated_by): self
     {
-        $this->updatedBy = $updatedBy;
+        $this->updated_by = $updated_by;
+
+        return $this;
     }
 
-
-    public function getUpdatedDate() :\DateTime
+    public function getUpdatedDate(): ?\DateTimeInterface
     {
-        return $this->updatedDate;
+        return $this->updated_date;
     }
 
-
-    public function setUpdatedDate(\DateTime $updatedDate)
+    public function setUpdatedDate(\DateTimeInterface $updated_date): self
     {
-        $this->updatedDate = $updatedDate;
-    }
+        $this->updated_date = $updated_date;
 
+        return $this;
+    }
 }

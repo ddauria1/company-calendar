@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use \Datetime;
 use App\Entity\User;
 use App\Form\LoginForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,23 +27,103 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-
-            var_dump($user);exit;
+            $userExist = null;
 
             /*
              * Check if user's exists if yes grant login otherwise return the login page with an error message
              * displayed
             */
 
-            return $this->redirectToRoute('task_success');
+            $userRepository = $this->getDoctrine()->getRepository(User::class);
+
+
+            $userExist = $userRepository->findOneBy([
+                'email' => $user->getEmail(),
+                'password' => $user->getPassword()
+            ]);
+
+            if (!$userExist) {
+                return $this->render('login.html.twig',
+                    [
+                        'title' => 'Company Calendar',
+                        'form' => $form->createView(),
+                        'error' => 'Invalid usersname/password'
+
+                    ]
+                );
+            }else {
+
+                return $this->render('/admin/index.html.twig',
+                    [
+                        'title' => 'Company Calendar'
+                    ]
+                );
+            }
+        }
+
+        return $this->render('login.html.twig',
+            [
+                'title' => 'Company Calendar',
+                'form' => $form->createView(),
+                'error' => ''
+
+            ]
+        );
+
+    }
+
+
+    /**
+     * @Route("/" , name="insertUser")
+     *
+     */
+    public function insert(Request $request, LoggerInterface $logger){
+        $logger->info("Inserting a new user");
+
+        $user = new User();
+
+        $form = $this->createForm(LoginForm::class,$user);
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+
+            //var_dump($user);exit;
+
+            $user->setFirstname("A");
+            $user->setSurname("B");
+            $user->setCreatedBy(1);
+            $user->setCreatedDate(new DateTime(date("Y-m-d H:i:s")));
+            $user->setUpdatedBy(1);
+            $user->setUpdatedDate(new DateTime(date("Y-m-d H:i:s")));
+            $user->setType(1);
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            /*
+             * Check if user's exists if yes grant login otherwise return the login page with an error message
+             * displayed
+            */
+
+
+            return $this->render('/admin/index.html.twig',
+                [
+                    'title' => 'Company Calendar'
+                ]
+            );
         }
 
 
         return $this->render('login.html.twig',
-            array(
+            [
                 'title' => 'Company Calendar',
                 'form' => $form->createView()
-            )
+            ]
         );
     }
 }
