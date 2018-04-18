@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends Controller
 {
@@ -16,6 +17,9 @@ class UserController extends Controller
      *
      */
     public function login(Request $request, LoggerInterface $logger){
+
+        $session = $request->getSession();
+
         $logger->info("We are loading the login page");
 
         $user = new User();
@@ -26,6 +30,10 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //reset session
+            $session->remove("User");
+
             $user = $form->getData();
             $userExist = null;
 
@@ -39,7 +47,7 @@ class UserController extends Controller
 
             $userExist = $userRepository->findOneBy([
                 'email' => $user->getEmail(),
-                'password' => $user->getPassword()
+                'password' => md5($user->getPassword())
             ]);
 
             if (!$userExist) {
@@ -53,6 +61,8 @@ class UserController extends Controller
                 );
             }else {
 
+                //define session
+                $session->set('User', $userExist);
                 return $this->render('/admin/index.html.twig',
                     [
                         'title' => 'Company Calendar'

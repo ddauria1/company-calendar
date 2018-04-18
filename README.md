@@ -15,7 +15,7 @@ I am building my custom made profiling system because at this time there is not 
 <li>twig</li>
 <li>form</li>
 <li>doctrine & maker - DB</l1>
-<li>Include PHP package that I built - Charity Widget</li>
+<li>sessions</li>
 </ul>
 
 
