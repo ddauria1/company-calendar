@@ -16,6 +16,7 @@ I am building my custom made profiling system because at this time there is not 
 <li>form</li>
 <li>doctrine & maker - DB</l1>
 <li>sessions</li>
+<li>SonadaAdminBundle</li>
 </ul>
 
 
