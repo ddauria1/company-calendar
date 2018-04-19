@@ -20,6 +20,10 @@ class UserController extends Controller
 
         $session = $request->getSession();
 
+        if($session->get('User')!=null){
+            return $this->redirect("/admin/");
+        }
+
         $logger->info("We are loading the login page");
 
         $user = new User();
@@ -44,10 +48,9 @@ class UserController extends Controller
 
             $userRepository = $this->getDoctrine()->getRepository(User::class);
 
-
             $userExist = $userRepository->findOneBy([
                 'email' => $user->getEmail(),
-                'password' => md5($user->getPassword())
+                'password' => $user->getPassword()
             ]);
 
             if (!$userExist) {
@@ -63,11 +66,7 @@ class UserController extends Controller
 
                 //define session
                 $session->set('User', $userExist);
-                return $this->render('/admin/index.html.twig',
-                    [
-                        'title' => 'Company Calendar'
-                    ]
-                );
+                return $this->redirect("/admin/");
             }
         }
 
