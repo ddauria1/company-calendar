@@ -83,6 +83,20 @@ class UserController extends Controller
 
 
     /**
+     * @Route("/logout" , name="logout")
+     *
+     */
+    public function logout(Request $request){
+
+        $session = $request->getSession();
+        $session->remove("User");
+
+        return $this->redirect("/","302");
+
+    }
+
+
+    /**
      * @Route("/" , name="insertUser")
      *
      */
